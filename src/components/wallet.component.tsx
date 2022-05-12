@@ -1,7 +1,7 @@
 import { Component, ChangeEvent } from "react";
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps} from 'react-router-dom';
 
-import TutorialDataService from "../services/wallet.service";
+import WalletDataService from "../services/wallet.service";
 import IWalletData from "../types/wallet";
 
 interface RouterProps { // type for `match.params`
@@ -79,7 +79,7 @@ export default class Wallet extends Component<Props, State> {
   }
 
   getWallet(id: string) {
-    TutorialDataService.get(id)
+    WalletDataService.get(id)
       .then((response: any) => {
         this.setState({
           currentWallet: response.data,
@@ -99,7 +99,7 @@ export default class Wallet extends Component<Props, State> {
   //     amount: this.state.currentWallet.amount,
   //   };
   //
-  //   TutorialDataService.update(data, this.state.currentWallet.id)
+  //   WalletDataService.update(data, this.state.currentWallet.id)
   //     .then((response: any) => {
   //       this.setState((prevState) => ({
   //         currentWallet: {
@@ -116,7 +116,7 @@ export default class Wallet extends Component<Props, State> {
   // }
 
   creditWallet() {
-    TutorialDataService.credit(
+    WalletDataService.credit(
       this.state.currentWallet.id,
         this.state.currentWallet.amount
     )
@@ -134,30 +134,8 @@ export default class Wallet extends Component<Props, State> {
       });
   }
 
-  walletToWallet() {
-    TutorialDataService.w2w(
-        this.state.currentWallet.id,
-        this.state.currentWallet.amount,
-        this.state.currentWallet.id
-    )
-        .then((response: any) => {
-          console.log(response.data);
-          // this.setState({
-          //   message: "The tutorial was updated successfully!",
-          // });
-          this.setState({
-            currentWallet: response.data,
-          });
-        })
-        .catch((e: Error) => {
-          console.log(e);
-        });
-  }
-
-
-
-  debitWallet() {
-    TutorialDataService.debit(this.state.currentWallet.id,this.state.currentWallet.amount)
+debitWallet() {
+    WalletDataService.debit(this.state.currentWallet.id,this.state.currentWallet.amount)
       .then((response: any) => {
         console.log(response.data);
         //this.props.history.push("/tutorials");
@@ -217,14 +195,6 @@ export default class Wallet extends Component<Props, State> {
               onClick={this.creditWallet}
             >
               CREDIT
-            </button>
-            {" "}
-            <button
-                type="submit"
-                className="badge badge-success"
-                onClick={this.walletToWallet}
-            >
-              W2W
             </button>
             <p>{this.state.message}</p>
           </div>

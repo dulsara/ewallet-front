@@ -1,5 +1,5 @@
 import { Component, ChangeEvent } from "react";
-import TutorialDataService from "../services/wallet.service";
+import WalletDataService from "../services/wallet.service";
 import { Link } from "react-router-dom";
 import IWalletData from '../types/wallet';
 
@@ -18,7 +18,7 @@ export default class WalletsList extends Component<Props, State>{
     this.onChangeSearchName = this.onChangeSearchName.bind(this);
     this.retrieveWallets = this.retrieveWallets.bind(this);
     this.refreshList = this.refreshList.bind(this);
-    this.setActiveTutorial = this.setActiveTutorial.bind(this);
+    this.setActiveWallet = this.setActiveWallet.bind(this);
     // this.removeAllTutorials = this.removeAllTutorials.bind(this);
     this.searchName = this.searchName.bind(this);
 
@@ -43,7 +43,7 @@ export default class WalletsList extends Component<Props, State>{
   }
 
   retrieveWallets() {
-    TutorialDataService.getAll()
+    WalletDataService.getAll()
       .then((response: any) => {
         this.setState({
           wallets: response.data
@@ -63,23 +63,12 @@ export default class WalletsList extends Component<Props, State>{
     });
   }
 
-  setActiveTutorial(wallet: IWalletData, index: number) {
+  setActiveWallet(wallet: IWalletData, index: number) {
     this.setState({
       currentWallet: wallet,
       currentIndex: index
     });
   }
-
-  // removeAllTutorials() {
-  //   TutorialDataService.deleteAll()
-  //     .then((response: any) => {
-  //       console.log(response.data);
-  //       this.refreshList();
-  //     })
-  //     .catch((e: Error) => {
-  //       console.log(e);
-  //     });
-  // }
 
   searchName() {
     this.setState({
@@ -87,10 +76,10 @@ export default class WalletsList extends Component<Props, State>{
       currentIndex: -1
     });
 
-    TutorialDataService.findByWallet(this.state.searchName)
+    WalletDataService.findByWallet(this.state.searchName)
       .then((response: any) => {
         this.setState({
-          wallets: response.data
+          wallets: response.data.conversions
         });
         console.log(response.data);
       })
@@ -106,21 +95,21 @@ export default class WalletsList extends Component<Props, State>{
       <div className="list row">
         <div className="col-md-8">
           <div className="input-group mb-3">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Search by Wallet Name"
-              value={searchName}
-              onChange={this.onChangeSearchName}
-            />
+            {/*<input*/}
+            {/*  type="text"*/}
+            {/*  className="form-control"*/}
+            {/*  placeholder="Search by Wallet Name"*/}
+            {/*  value={searchName}*/}
+            {/*  onChange={this.onChangeSearchName}*/}
+            {/*/>*/}
             <div className="input-group-append">
-              <button
-                className="btn btn-outline-secondary"
-                type="button"
-                onClick={this.searchName}
-              >
-                Search
-              </button>
+              {/*<button*/}
+              {/*  className="btn btn-outline-secondary"*/}
+              {/*  type="button"*/}
+              {/*  onClick={this.searchName}*/}
+              {/*>*/}
+              {/*  Search*/}
+              {/*</button>*/}
             </div>
           </div>
         </div>
@@ -129,26 +118,19 @@ export default class WalletsList extends Component<Props, State>{
 
           <ul className="list-group">
             {wallets &&
-              wallets.map((tutorial: IWalletData, index: number) => (
+              wallets.map((wallet: IWalletData, index: number) => (
                 <li
                   className={
                     "list-group-item " +
                     (index === currentIndex ? "active" : "")
                   }
-                  onClick={() => this.setActiveTutorial(tutorial, index)}
+                  onClick={() => this.setActiveWallet(wallet, index)}
                   key={index}
                 >
-                  {tutorial.name}
+                  {wallet.name}
                 </li>
               ))}
           </ul>
-
-          {/*<button*/}
-          {/*  className="m-3 btn btn-sm btn-danger"*/}
-          {/*  onClick={this.removeAllTutorials}*/}
-          {/*>*/}
-          {/*  Remove All*/}
-          {/*</button>*/}
         </div>
         <div className="col-md-6">
           {currentWallet ? (
