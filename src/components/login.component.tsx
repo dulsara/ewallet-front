@@ -1,11 +1,12 @@
-import { Component } from "react";
-import { RouteComponentProps } from "react-router-dom";
-import { Formik, Field, Form, ErrorMessage } from "formik";
-// import * as Yup from "yup";
+import {Component} from "react";
+import {RouteComponentProps} from "react-router-dom";
+import {Formik, Field, Form, ErrorMessage} from "formik";
 import AuthService from "../services/auth.service";
+
 interface RouterProps {
     history: string;
 }
+
 type Props = RouteComponentProps<RouterProps>;
 type State = {
     username: string,
@@ -24,14 +25,9 @@ export default class Login extends Component<Props, State> {
             message: ""
         };
     }
-    // validationSchema() {
-    //     return Yup.object().shape({
-    //         username: Yup.string().required("This field is required!"),
-    //         password: Yup.string().required("This field is required!"),
-    //     });
-    // }
+
     handleLogin(formValue: { username: string; password: string }) {
-        const { username, password } = formValue;
+        const {username, password} = formValue;
         this.setState({
             message: "",
             loading: true
@@ -56,8 +52,9 @@ export default class Login extends Component<Props, State> {
             }
         );
     }
+
     render() {
-        const { loading, message } = this.state;
+        const {loading, message} = this.state;
         const initialValues = {
             username: "",
             password: "",
@@ -76,7 +73,7 @@ export default class Login extends Component<Props, State> {
                         <Form>
                             <div className="form-group">
                                 <label htmlFor="username">Username</label>
-                                <Field name="username" type="text" className="form-control" />
+                                <Field name="username" type="text" className="form-control"/>
                                 <ErrorMessage
                                     name="username"
                                     component="div"
@@ -85,7 +82,7 @@ export default class Login extends Component<Props, State> {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="password">Password</label>
-                                <Field name="password" type="password" className="form-control" />
+                                <Field name="password" type="password" className="form-control"/>
                                 <ErrorMessage
                                     name="password"
                                     component="div"
