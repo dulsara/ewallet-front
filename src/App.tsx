@@ -79,10 +79,10 @@ class App extends Component<Props, State> {
 
                 <div className="container mt-3">
                     <Switch>
-                        <Route exact path="/wallets" component={WalletsList}/>
-                        <Route exact path="/add" component={AddWallet}/>
-                        <Route path="/wallets/:id" component={Wallet}/>
-                        <Route exact path="/transfer" component={TransferWallet}/>
+                        {showBoard && (<Route exact path="/wallets" component={WalletsList}/> )}
+                        {showBoard && (<Route exact path="/add" component={AddWallet}/>)}
+                        {showBoard && (<Route path="/wallets/:id" component={Wallet}/>)}
+                        {showBoard && (<Route exact path="/transfer" component={TransferWallet}/>)}
                         <Route exact path={["/", "/login"]} component={Login}/>
                     </Switch>
                 </div>
